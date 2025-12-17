@@ -1,0 +1,46 @@
+---
+- name: get current kernel version
+  command: uname -r
+  register: current_kernel
+
+- debug:
+    msg: "{{ current_kernel.stdout_lines }}"
+
+#- name: list kernel
+#  yum:
+#    list: kernel
+#  register: current_kernel
+
+
+- name: update all
+  package:
+    name: "*"
+    state: latest 
+  register: update
+
+- name: check for new kernel packages
+  yum:
+    list: kernel
+  register: latest_installed_kernel
+
+- debug:
+    msg: "update is successful now the servers will reboot"
+  when: 
+    - update is changed
+
+
+
+- name: reboot
+  reboot:
+  when: 
+    - update is changed
+#  current_kernel != latest_installed_kernel
+
+
+- name: get new running kernel version
+  command: uname -r
+  register: new_kernel
+
+
+- debug:
+    msg: "{{ new_kernel.stdout_lines }}"

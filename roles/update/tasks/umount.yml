@@ -1,0 +1,5 @@
+---
+- name: unmount /boot ping
+  mount:
+    path: /boot
+    state: unmounted

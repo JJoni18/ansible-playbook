@@ -1,0 +1,8 @@
+---
+- name: update
+  hosts: all
+  tasks:
+
+
+  roles:
+    - update

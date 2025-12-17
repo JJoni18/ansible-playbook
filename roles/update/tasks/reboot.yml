@@ -1,0 +1,12 @@
+---
+- name: reboot host
+  reboot:
+#  when:
+#    - update is changed
+
+- name: get uptime
+  command: uptime
+  register: uptime_out
+
+- debug:
+    msg: "{{ uptime_out.stdout }}"
